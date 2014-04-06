@@ -51,7 +51,7 @@ def post(url, auth_handler, args, photo_file):
     files = [("photo", os.path.basename(photo_file), open(photo_file).read())]
 
     r, data = multipart.posturl(url, fields, files)
-    if r.status != 200:
+    if r.getcode() != 200:
         raise FlickrError("HTTP Error %i: %s" % (r.status, data))
     
     r = ET.fromstring(data)

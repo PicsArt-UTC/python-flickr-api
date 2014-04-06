@@ -11,7 +11,7 @@
 
 """
 
-import httplib
+import urllib2
 import mimetypes
 import urlparse
 
@@ -31,13 +31,10 @@ def post_multipart(host, selector, fields, files):
     Return the server's response page.
     """
     content_type, body = encode_multipart_formdata(fields, files)
-    h = httplib.HTTPConnection(host)
     headers = {"Content-Type": content_type, 'content-length': str(len(body))}
-    h.request("POST", selector, headers=headers)
-    h.send(body)
-    r = h.getresponse()
+    request = urllib2.Request("http://" + host + selector, body, headers)
+    r = urllib2.urlopen(request)
     data = r.read()
-    h.close()
     return r, data
 
 

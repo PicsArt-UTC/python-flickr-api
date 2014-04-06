@@ -33,3 +33,10 @@ from auth import set_auth_handler
 from method_call import enable_cache, disable_cache
 from keys import set_keys
 from _version import __version__
+
+proxy = urllib2.ProxyHandler({
+    'http': 'proxyweb.utc.fr:3128',
+    'https': 'proxyweb.utc.fr:3128'
+})
+opener = urllib2.build_opener(proxy)
+urllib2.install_opener(opener)
